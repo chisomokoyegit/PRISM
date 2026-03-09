@@ -64,41 +64,6 @@ with st.sidebar:
         if st.button(suggestion, use_container_width=True):
             st.session_state.pending_question = suggestion
 
-# Display chat history
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Handle pending question from sidebar
-if "pending_question" in st.session_state:
-    prompt = st.session_state.pending_question
-    del st.session_state.pending_question
-
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # Generate response
-    with st.chat_message("assistant"):
-        response = generate_response(prompt, api_key if api_key else None)
-        st.markdown(response)
-
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.rerun()
-
-# Chat input
-if prompt := st.chat_input("Ask about your projects..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    with st.chat_message("assistant"):
-        response = generate_response(prompt, api_key if api_key else None)
-        st.markdown(response)
-
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-
 def generate_response(prompt: str, api_key: str | None) -> str:
     """Generate a response to the user's question."""
 
@@ -158,3 +123,39 @@ Run the ML Analysis for detailed feature importance."""
             return f"I understand you're asking about: '{prompt}'\n\nFor detailed AI-powered responses, the OpenAI integration would provide contextual answers based on your project data."
         else:
             return f"I can help with that! For detailed AI-powered responses, please enter your OpenAI API key in the sidebar.\n\nIn the meantime, try asking:\n- 'Which projects are highest risk?'\n- 'Show me projects over budget'\n- 'How many projects do I have?'"
+
+# Display chat history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Handle pending question from sidebar
+if "pending_question" in st.session_state:
+    prompt = st.session_state.pending_question
+    del st.session_state.pending_question
+
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Generate response
+    with st.chat_message("assistant"):
+        response = generate_response(prompt, api_key if api_key else None)
+        st.markdown(response)
+
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.rerun()
+
+# Chat input
+if prompt := st.chat_input("Ask about your projects..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        response = generate_response(prompt, api_key if api_key else None)
+        st.markdown(response)
+
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+
