@@ -219,7 +219,7 @@ prism/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/prism.git
+git clone https://github.com/chisomokoyegit/PRISM.git
 cd prism
 
 # 2. Create virtual environment
